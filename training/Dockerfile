@@ -16,12 +16,17 @@ COPY data/ /app/data
 COPY training /app/training
 
 # Copy utils.py
-COPY utils.py /app
-COPY ${CONF_PATH} /app
+COPY utils.py /app/utils.py
+
+COPY ${CONF_PATH} /app/${CONF_PATH}
 
 # Install any necessary packages listed in requirements.txt
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Adjust PYTHONPATH
+ENV PYTHONPATH "${PYTHONPATH}:/app"
+
 # Train the model
-RUN python3 training/train.py
+# RUN python3 training/train.py
+CMD ["python3", "training/train.py"]
