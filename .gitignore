@@ -2,12 +2,15 @@
 __pycache__/
 *.py[cod]
 .vscode
+.idea
+.venv
 
 # Directories
 data/
 models/
 results/
-mlruns/
+training/mlruns/
+venv/
 
 # File Extensions
 *.csv

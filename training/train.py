@@ -1,7 +1,6 @@
 """
 This script prepares the data, runs the training, and saves the model.
 """
-
 import argparse
 import os
 import sys
@@ -14,6 +13,7 @@ from datetime import datetime
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
+from utils import get_project_dir, configure_logging
 
 # Comment this lines if you have problems with MLFlow installation
 import mlflow
@@ -24,9 +24,8 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(ROOT_DIR))
 
 # Change to CONF_FILE = "settings.json" if you have problems with env variables
-CONF_FILE = os.getenv('CONF_PATH') 
-
-from utils import get_project_dir, configure_logging
+CONF_FILE = "../settings.json"
+# CONF_FILE = os.getenv('CONF_PATH')
 
 # Loads configuration settings from JSON
 with open(CONF_FILE, "r") as file:
@@ -46,7 +45,7 @@ parser.add_argument("--model_path",
                     help="Specify the path for the output model")
 
 
-class DataProcessor():
+class DataProcessor:
     def __init__(self) -> None:
         pass
 
@@ -71,32 +70,32 @@ class DataProcessor():
         return df
 
 
-class Training():
+class Training:
     def __init__(self) -> None:
         self.model = DecisionTreeClassifier(random_state=conf['general']['random_state'])
 
     def run_training(self, df: pd.DataFrame, out_path: str = None, test_size: float = 0.33) -> None:
         logging.info("Running training...")
-        X_train, X_test, y_train, y_test = self.data_split(df, test_size=test_size)
+        x_train, x_test, y_train, y_test = self.data_split(df, test_size=test_size)
         start_time = time.time()
-        self.train(X_train, y_train)
+        self.train(x_train, y_train)
         end_time = time.time()
         logging.info(f"Training completed in {end_time - start_time} seconds.")
-        self.test(X_test, y_test)
+        self.test(x_test, y_test)
         self.save(out_path)
 
     def data_split(self, df: pd.DataFrame, test_size: float = 0.33) -> tuple:
         logging.info("Splitting data into training and test sets...")
-        return train_test_split(df[['x1','x2']], df['y'], test_size=test_size, 
+        return train_test_split(df[['x1', 'x2']], df['y'], test_size=test_size,
                                 random_state=conf['general']['random_state'])
     
-    def train(self, X_train: pd.DataFrame, y_train: pd.DataFrame) -> None:
+    def train(self, x_train: pd.DataFrame, y_train: pd.DataFrame) -> None:
         logging.info("Training the model...")
-        self.model.fit(X_train, y_train)
+        self.model.fit(x_train, y_train)
 
-    def test(self, X_test: pd.DataFrame, y_test: pd.DataFrame) -> float:
+    def test(self, x_test: pd.DataFrame, y_test: pd.DataFrame) -> float:
         logging.info("Testing the model...")
-        y_pred = self.model.predict(X_test)
+        y_pred = self.model.predict(x_test)
         res = f1_score(y_test, y_pred)
         logging.info(f"f1_score: {res}")
         return res
