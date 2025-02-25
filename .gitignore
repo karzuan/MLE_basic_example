@@ -9,7 +9,7 @@ __pycache__/
 data/
 models/
 results/
-training/mlruns/
+mlruns/
 venv/
 
 # File Extensions

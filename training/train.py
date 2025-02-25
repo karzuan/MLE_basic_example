@@ -16,8 +16,9 @@ from sklearn.metrics import f1_score
 from utils import get_project_dir, configure_logging
 
 # Comment this lines if you have problems with MLFlow installation
-import mlflow
-mlflow.autolog()
+# import mlflow
+# mlflow.set_tracking_uri("../mlruns")
+# mlflow.autolog()
 
 # Adds the root directory to system path
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
