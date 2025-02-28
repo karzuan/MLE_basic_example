@@ -7,13 +7,11 @@ import sys
 import pickle
 import json
 import logging
-import pandas as pd
 import time
-from datetime import datetime
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score
+from datetime import *
 from utils import get_project_dir, configure_logging
+import pandas as pd
+import numpy as np
 
 # Comment this lines if you have problems with MLFlow installation
 # import mlflow

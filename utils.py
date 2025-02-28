@@ -18,7 +18,7 @@ def get_project_dir(sub_dir: str) -> str:
 #     logging.basicConfig(level=logging.INFO,
 #                         format='%(asctime)s - %(levelname)s - %(message)s'
 #                         )
-def configure_logging(log_file: str = '/app/app.log') -> None:
+def configure_logging(log_file: str = '../app.log') -> None:
     """Configures logging to output to a file and console"""
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(levelname)s - %(message)s',
