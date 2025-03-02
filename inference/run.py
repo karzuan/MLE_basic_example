@@ -7,7 +7,7 @@ import argparse
 import json
 import logging
 import os
-import pickle
+import pickle # library for serializing and de-serializing Python objects
 import sys
 from datetime import datetime
 from utils import get_project_dir, configure_logging
@@ -49,6 +49,7 @@ parser.add_argument("--out_path",
 
 class IrisModel(pl.LightningModule):
     def __init__(self, input_dim=4, output_dim=3, learning_rate=0.01):
+        # input_dim: number of features in the input
         super(IrisModel, self).__init__()
         self.model = nn.Sequential(
             nn.Linear(input_dim, 8),
@@ -59,6 +60,7 @@ class IrisModel(pl.LightningModule):
             nn.Sigmoid(),
             nn.Linear(16, output_dim)
         )
+        # Loss function
         self.loss_fn = nn.CrossEntropyLoss()
         self.accuracy = Accuracy(task='multiclass', num_classes=3)
         self.learning_rate = learning_rate
@@ -67,6 +69,7 @@ class IrisModel(pl.LightningModule):
         return self.model(x)
 
     def training_step(self, batch, batch_idx):
+        # training_step method is called for each batch
         x_batch, y_batch = batch
         y_pred = self(x_batch)
         loss = self.loss_fn(y_pred, y_batch)
