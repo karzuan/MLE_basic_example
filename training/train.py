@@ -7,11 +7,18 @@ import sys
 import pickle
 import json
 import logging
+from datetime import datetime
 import time
-from datetime import *
 from utils import get_project_dir, configure_logging
+from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
+import torch
+from torch import nn
+import torch.nn.functional as F
+from torchmetrics import Accuracy
+import pytorch_lightning as pl
+from torch.utils.data import TensorDataset, DataLoader
 
 # Comment this lines if you have problems with MLFlow installation
 # import mlflow
@@ -23,7 +30,10 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(ROOT_DIR))
 
 # Change to CONF_FILE = "settings.json" if you have problems with env variables
-CONF_FILE = "../settings.json"
+if os.path.exists("../settings.json"):
+    CONF_FILE = "../settings.json"
+else:
+    CONF_FILE = "settings.json"
 # CONF_FILE = os.getenv('CONF_PATH')
 
 # Loads configuration settings from JSON
@@ -37,10 +47,10 @@ TRAIN_PATH = os.path.join(DATA_DIR, conf['train']['table_name'])
 
 # Initializes parser for command line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--train_file", 
-                    help="Specify inference data file", 
+parser.add_argument("--train_file",
+                    help="Specify inference data file",
                     default=conf['train']['table_name'])
-parser.add_argument("--model_path", 
+parser.add_argument("--model_path",
                     help="Specify the path for the output model")
 
 
@@ -57,7 +67,7 @@ class DataProcessor:
     def data_extraction(self, path: str) -> pd.DataFrame:
         logging.info(f"Loading data from {path}...")
         return pd.read_csv(path)
-    
+
     def data_rand_sampling(self, df: pd.DataFrame, max_rows: int) -> pd.DataFrame:
         if not max_rows or max_rows < 0:
             logging.info('Max_rows not defined. Skipping sampling.')
@@ -68,10 +78,56 @@ class DataProcessor:
             logging.info(f'Random sampling performed. Sample size: {max_rows}')
         return df
 
+class IrisModel(pl.LightningModule):
+    def __init__(self, input_dim=4, output_dim=3, learning_rate=0.01):
+        super(IrisModel, self).__init__()
+        self.model = nn.Sequential(
+            nn.Linear(input_dim, 8),
+            nn.ReLU(),
+            nn.BatchNorm1d(8),
+            nn.Dropout(0.5),
+            nn.Linear(8, 16),
+            nn.Sigmoid(),
+            nn.Linear(16, output_dim)
+        )
+        self.loss_fn = nn.CrossEntropyLoss()
+        self.accuracy = Accuracy(task='multiclass', num_classes=3)
+        self.learning_rate = learning_rate
+
+    def forward(self, x):
+        return self.model(x)
+
+    def training_step(self, batch, batch_idx):
+        x_batch, y_batch = batch
+        y_pred = self(x_batch)
+        loss = self.loss_fn(y_pred, y_batch)
+        self.log('train_loss', loss, on_epoch=True, prog_bar=True)
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        x_batch, y_batch = batch
+        y_pred = self(x_batch)
+        loss = self.loss_fn(y_pred, y_batch)
+        acc = self.accuracy(y_pred, y_batch)
+        self.log('val_loss', loss, on_epoch=True, prog_bar=True)
+        self.log('val_acc', acc, on_epoch=True, prog_bar=True)
+        return {'loss': loss, 'accuracy': acc}
+
+    def test_step(self, batch, batch_idx): # Added test_step method
+        x_batch, y_batch = batch
+        y_pred = self(x_batch)
+        loss = self.loss_fn(y_pred, y_batch)
+        acc = self.accuracy(y_pred, y_batch)
+        self.log('test_loss', loss, on_epoch=True, prog_bar=True)
+        self.log('test_acc', acc, on_epoch=True, prog_bar=True)
+        return {'loss': loss, 'accuracy': acc}
+
+    def configure_optimizers(self):
+        return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
 
 class Training:
     def __init__(self) -> None:
-        self.model = DecisionTreeClassifier(random_state=conf['general']['random_state'])
+        self.model = IrisModel()
 
     def run_training(self, df: pd.DataFrame, out_path: str = None, test_size: float = 0.33) -> None:
         logging.info("Running training...")
@@ -85,29 +141,45 @@ class Training:
 
     def data_split(self, df: pd.DataFrame, test_size: float = 0.33) -> tuple:
         logging.info("Splitting data into training and test sets...")
-        return train_test_split(df[['x1', 'x2']], df['y'], test_size=test_size,
-                                random_state=conf['general']['random_state'])
-    
+        return train_test_split(df[['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']],
+                         df['y'],
+                         test_size=test_size, random_state=conf['general']['random_state'])
+
     def train(self, x_train: pd.DataFrame, y_train: pd.DataFrame) -> None:
         logging.info("Training the model...")
-        self.model.fit(x_train, y_train)
+        x_train = torch.tensor(x_train.values, dtype=torch.float32)
+        y_train = torch.tensor(y_train.values, dtype=torch.long)
+        train_dataset = TensorDataset(x_train, y_train)
+        train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+        trainer = pl.Trainer(max_epochs=10)
+        trainer.fit(self.model, train_loader)
 
     def test(self, x_test: pd.DataFrame, y_test: pd.DataFrame) -> float:
         logging.info("Testing the model...")
-        y_pred = self.model.predict(x_test)
-        res = f1_score(y_test, y_pred)
-        logging.info(f"f1_score: {res}")
+        x_test = torch.tensor(x_test.values, dtype=torch.float32)
+        y_test = torch.tensor(y_test.values, dtype=torch.long)
+        test_dataset = TensorDataset(x_test, y_test)
+        test_loader = DataLoader(test_dataset, batch_size=32)
+        trainer = pl.Trainer()
+        res = trainer.test(self.model, test_loader)
+        # y_pred = self.model.predict(x_test)
+        # res = f1_score(y_test, y_pred)
+        logging.info(f"test results: {res}")
         return res
 
     def save(self, path: str) -> None:
         logging.info("Saving the model...")
         if not os.path.exists(MODEL_DIR):
             os.makedirs(MODEL_DIR)
-
+            print(f"Created directory: {MODEL_DIR}")
+            logging.info(f"Created directory: {MODEL_DIR}")
         if not path:
             path = os.path.join(MODEL_DIR, datetime.now().strftime(conf['general']['datetime_format']) + '.pickle')
+            print(f"Model saved at: {path}")
+            logging.info(f"Model saved at: {path}")
         else:
             path = os.path.join(MODEL_DIR, path)
+            logging.info(f"Model saved at: {path}")
 
         with open(path, 'wb') as f:
             pickle.dump(self.model, f)

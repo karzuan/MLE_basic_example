@@ -12,17 +12,23 @@ import sys
 from datetime import datetime
 from utils import get_project_dir, configure_logging
 from typing import List
-
+import torch
+from torch import nn
+import torch.nn.functional as F
+from torchmetrics import Accuracy
+import pytorch_lightning as pl
+from torch.utils.data import TensorDataset, DataLoader
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
 
 # Adds the root directory to system path
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(ROOT_DIR))
 
 # Change to CONF_FILE = "settings.json" if you have problems with env variables
-# CONF_FILE = os.getenv('CONF_PATH')
-CONF_FILE = "../settings.json"
+if os.path.exists("../settings.json"):
+    CONF_FILE = "../settings.json"
+else:
+    CONF_FILE = "settings.json"
 
 # Loads configuration settings from JSON
 with open(CONF_FILE, "r") as file:
@@ -41,6 +47,52 @@ parser.add_argument("--infer_file",
 parser.add_argument("--out_path", 
                     help="Specify the path to the output table")
 
+class IrisModel(pl.LightningModule):
+    def __init__(self, input_dim=4, output_dim=3, learning_rate=0.01):
+        super(IrisModel, self).__init__()
+        self.model = nn.Sequential(
+            nn.Linear(input_dim, 8),
+            nn.ReLU(),
+            nn.BatchNorm1d(8),
+            nn.Dropout(0.5),
+            nn.Linear(8, 16),
+            nn.Sigmoid(),
+            nn.Linear(16, output_dim)
+        )
+        self.loss_fn = nn.CrossEntropyLoss()
+        self.accuracy = Accuracy(task='multiclass', num_classes=3)
+        self.learning_rate = learning_rate
+
+    def forward(self, x):
+        return self.model(x)
+
+    def training_step(self, batch, batch_idx):
+        x_batch, y_batch = batch
+        y_pred = self(x_batch)
+        loss = self.loss_fn(y_pred, y_batch)
+        self.log('train_loss', loss, on_epoch=True, prog_bar=True)
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        x_batch, y_batch = batch
+        y_pred = self(x_batch)
+        loss = self.loss_fn(y_pred, y_batch)
+        acc = self.accuracy(y_pred, y_batch)
+        self.log('val_loss', loss, on_epoch=True, prog_bar=True)
+        self.log('val_acc', acc, on_epoch=True, prog_bar=True)
+        return {'loss': loss, 'accuracy': acc}
+
+    def test_step(self, batch, batch_idx): # Added test_step method
+        x_batch, y_batch = batch
+        y_pred = self(x_batch)
+        loss = self.loss_fn(y_pred, y_batch)
+        acc = self.accuracy(y_pred, y_batch)
+        self.log('test_loss', loss, on_epoch=True, prog_bar=True)
+        self.log('test_acc', acc, on_epoch=True, prog_bar=True)
+        return {'loss': loss, 'accuracy': acc}
+
+    def configure_optimizers(self):
+        return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
 
 def get_latest_model_path() -> str:
     """Gets the path of the latest saved model"""
@@ -50,10 +102,11 @@ def get_latest_model_path() -> str:
             if not latest or datetime.strptime(latest, conf['general']['datetime_format'] + '.pickle') < \
                     datetime.strptime(filename, conf['general']['datetime_format'] + '.pickle'):
                 latest = filename
+    logging.info(f'Latest model: {latest}')
     return os.path.join(MODEL_DIR, latest)
 
 
-def get_model_by_path(path: str) -> DecisionTreeClassifier:
+def get_model_by_path(path: str):
     """Loads and returns the specified model"""
     try:
         with open(path, 'rb') as f:
@@ -75,7 +128,7 @@ def get_inference_data(path: str) -> pd.DataFrame:
         sys.exit(1)
 
 
-def predict_results(model: DecisionTreeClassifier, infer_data: pd.DataFrame) -> pd.DataFrame:
+def predict_results(model: IrisModel, infer_data: pd.DataFrame) -> pd.DataFrame:
     """Predict de results and join it with the infer_data"""
     results = model.predict(infer_data)
     infer_data['results'] = results

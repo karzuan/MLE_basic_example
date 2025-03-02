@@ -16,12 +16,12 @@ COPY data/ /app/data
 COPY training /app/training
 
 # Copy utils.py
-COPY utils.py /app/utils.py
-
-COPY ${CONF_PATH} /app/${CONF_PATH}
+# COPY ../utils.py /app
+COPY utils.py /app
+COPY ${CONF_PATH} /app
 
 # Install any necessary packages listed in requirements.txt
-COPY requirements.txt ./
+COPY requirements.txt /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Adjust PYTHONPATH
