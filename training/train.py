@@ -30,11 +30,11 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(ROOT_DIR))
 
 # Change to CONF_FILE = "settings.json" if you have problems with env variables
+# CONF_FILE = os.getenv('CONF_PATH')
 if os.path.exists("../settings.json"):
     CONF_FILE = "../settings.json"
 else:
     CONF_FILE = "settings.json"
-# CONF_FILE = os.getenv('CONF_PATH')
 
 # Loads configuration settings from JSON
 with open(CONF_FILE, "r") as file:
@@ -67,7 +67,7 @@ class DataProcessor:
     def data_extraction(self, path: str) -> pd.DataFrame:
         logging.info(f"Loading data from {path}...")
         return pd.read_csv(path)
-
+        
     def data_rand_sampling(self, df: pd.DataFrame, max_rows: int) -> pd.DataFrame:
         if not max_rows or max_rows < 0:
             logging.info('Max_rows not defined. Skipping sampling.')
@@ -124,6 +124,7 @@ class IrisModel(pl.LightningModule):
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
+
 
 class Training:
     def __init__(self) -> None:
@@ -183,6 +184,7 @@ class Training:
 
         with open(path, 'wb') as f:
             pickle.dump(self.model, f)
+
 
 
 def main():
