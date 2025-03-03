@@ -30,8 +30,8 @@ This project has a modular structure, where each folder has a specific duty.
 ```
 MLE_basic_example
 ├── data                      # Data files used for training and inference (it can be generated with data_generation.py script)
-│   ├── xor_inference_data.csv
-│   └── xor_train_data.csv
+│   ├── iris_inference_data.csv
+│   └── iris_train_data.csv
 ├── data_process              # Scripts used for data processing and generation
 │   ├── data_generation.py
 │   └── __init__.py           
@@ -47,6 +47,7 @@ MLE_basic_example
 │   └── __init__.py
 ├── utils.py                  # Utility functions and classes that are used in scripts
 ├── settings.json             # All configurable parameters and settings
+├── app.log                   # Registers important events and errors during project execution
 └── README.md
 ```
 
@@ -57,6 +58,7 @@ Please note, some IDEs, including VSCode, may have problems detecting environmen
 
 ## Data:
 Data is the cornerstone of any Machine Learning project. For generating the data, use the script located at `data_process/data_generation.py`. The generated data is used to train the model and to test the inference. Following the approach of separating concerns, the responsibility of data generation lies with this script.
+
 
 ## Training:
 The training phase of the ML pipeline includes preprocessing of data, the actual training of the model, and the evaluation and validation of the model's performance. All of these steps are performed by the script `training/train.py`.
