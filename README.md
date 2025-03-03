@@ -5,7 +5,7 @@ This project demonstrates an end-to-end data science workflow for classifying Ir
 ## Prerequisites
 
 - **Data Acquisition**: Scrapes Iris dataset from [Scikit-learn](https://scikit-learn.org/)
-- **Data Processing**: Splits data into training/inference sets (70/30) with stratified sampling
+- **Data Processing**: Splits data into training/inference sets (80/20) with stratified sampling
 - **Deep Learning Model**: PyTorch-based neural network classifier
 - **Containerized Workflow**:
   - 🐳 **Training Container**: Isolated model training environment
