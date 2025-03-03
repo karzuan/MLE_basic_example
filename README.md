@@ -111,6 +111,6 @@ python inference/run.py
 Replace `/path_to_your_local_model_directory`, `/path_to_your_input_folder`, and `/path_to_your_output_folder` with actual paths on your local machine or network where your models, input, and output are stored.
 
 ## Acknowledgments
-Scikit-learn development team
-Alexander Markorvin [https://github.com/MarkKorvin/MLE_basic_example]
-PyTorch maintainers
+- Scikit-learn development team
+- Alexander Markorvin [https://github.com/MarkKorvin/MLE_basic_example]
+- PyTorch maintainers
