@@ -11,11 +11,12 @@ import pickle # library for serializing and de-serializing Python objects
 import sys
 from datetime import datetime
 from utils import get_project_dir, configure_logging
-from typing import List
+from typing import List, Any
 import torch
 from torch import nn
 import torch.nn.functional as F
 from torchmetrics import Accuracy
+from sklearn.metrics import accuracy_score
 import pytorch_lightning as pl
 from torch.utils.data import TensorDataset, DataLoader
 import pandas as pd
@@ -97,6 +98,15 @@ class IrisModel(pl.LightningModule):
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
 
+    def predict(self, x):
+        # Assuming `x` is a tensor of the shape [batch_size, input_dim]
+        self.eval()  # Set the model to evaluation mode
+        with torch.no_grad():  # Turn off gradients to speed up this part
+            predictions = self.forward(x)
+            _, predicted_classes = torch.max(predictions, 1)
+        return predicted_classes
+
+
 def get_latest_model_path() -> str:
     """Gets the path of the latest saved model"""
     latest = None
@@ -125,18 +135,25 @@ def get_inference_data(path: str) -> pd.DataFrame:
     """loads and returns data for inference from the specified csv file"""
     try:
         df = pd.read_csv(path)
+        logging.info("inference data has been loaded")
         return df
     except Exception as e:
         logging.error(f"An error occurred while loading inference data: {e}")
         sys.exit(1)
 
 
-def predict_results(model: IrisModel, infer_data: pd.DataFrame) -> pd.DataFrame:
-    """Predict de results and join it with the infer_data"""
-    results = model.predict(infer_data)
-    infer_data['results'] = results
-    return infer_data
-
+def predict_results(model, infer_data: pd.DataFrame) -> pd.DataFrame:
+    """Predict the results and join it with the infer_data"""
+    results = pd.DataFrame()
+    results['actual'] = infer_data['y']
+    infer_data = infer_data.drop(columns=['y'])
+    infer_data = torch.tensor(infer_data.values, dtype=torch.float32)
+    results['predicted'] = model.predict(infer_data)
+    logging.info(f'Accuracy score: {accuracy_score(results["actual"], results["predicted"])}')
+    # infer_data['results'] = results
+    # infer_data['actuals'] = y_infer
+    results['result'] = results.apply(lambda x: True if x['actual'] == x['predicted'] else False, axis=1)
+    return results
 
 def store_results(results: pd.DataFrame, path: str = None) -> None:
     """Store the prediction results in 'results' directory with current datetime as a filename"""
@@ -160,7 +177,7 @@ def main():
     results = predict_results(model, infer_data)
     store_results(results, args.out_path)
 
-    logging.info(f'Prediction results: {results}')
+    #logging.info(f'Prediction results: {results}')
 
 
 if __name__ == "__main__":

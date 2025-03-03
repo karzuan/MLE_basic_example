@@ -9,7 +9,7 @@
     },
     "train": {
         "table_name": "iris_train_data.csv",
-        "data_sample": 105,
+        "data_sample": 120,
         "test_size": 0.3
     },
     "inference": {

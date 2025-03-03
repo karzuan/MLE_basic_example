@@ -85,7 +85,7 @@ if __name__ == "__main__":
     logger.info("Generating target...")
     df['y'] = iris.target
     logger.info("Test-train split...")
-    iris_train, iris_test = train_test_split(df, test_size=0.3, random_state=42)
+    iris_train, iris_test = train_test_split(df, test_size=0.2, random_state=conf['general']['random_state'])
     # gen = XorSetGenerator()
     logger.info(f"Saving data to {os.path}...")
     iris_train.to_csv(TRAIN_PATH, index=False)

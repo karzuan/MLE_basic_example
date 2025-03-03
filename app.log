@@ -156,3 +156,209 @@
 2025-03-02 22:15:13,765 - ERROR - An error occurred while loading the model: Can't get attribute 'IrisModel' on <module '__main__' from '/Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/inference/run.py'>
 2025-03-02 22:19:33,291 - INFO - Latest model: 02.03.2025_20.16.pickle
 2025-03-02 22:19:33,299 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/02.03.2025_20.16.pickle
+2025-03-03 10:02:36,038 - INFO - Starting script...
+2025-03-03 10:02:36,039 - INFO - Generating features...
+2025-03-03 10:02:38,369 - INFO - Generating target...
+2025-03-03 10:02:38,370 - INFO - Test-train split...
+2025-03-03 10:02:38,371 - INFO - Saving data to <module 'posixpath' (frozen)>...
+2025-03-03 10:02:39,463 - INFO - Script completed successfully.
+2025-03-03 10:35:44,738 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 10:35:44,745 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 11:16:20,872 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 11:16:20,893 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 11:16:20,906 - INFO - inference data has been loaded
+2025-03-03 11:18:09,749 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 11:18:09,755 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 11:18:09,767 - INFO - inference data has been loaded
+2025-03-03 11:23:25,659 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 11:23:25,671 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 11:23:25,681 - INFO - inference data has been loaded
+2025-03-03 11:42:11,599 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 11:42:11,623 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 11:42:11,638 - INFO - inference data has been loaded
+2025-03-03 11:45:51,534 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 11:45:51,540 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 11:45:51,552 - INFO - inference data has been loaded
+2025-03-03 11:46:27,137 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 11:46:27,143 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 11:46:27,159 - INFO - inference data has been loaded
+2025-03-03 11:46:27,999 - INFO - Results saved to /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/results/03.03.2025_11.46.csv
+2025-03-03 11:46:28,002 - INFO - Prediction results: tensor([[6.1000, 2.8000, 4.7000, 1.2000],
+        [5.7000, 3.8000, 1.7000, 0.3000],
+        [7.7000, 2.6000, 6.9000, 2.3000],
+        [6.0000, 2.9000, 4.5000, 1.5000],
+        [6.8000, 2.8000, 4.8000, 1.4000],
+        [5.4000, 3.4000, 1.5000, 0.4000],
+        [5.6000, 2.9000, 3.6000, 1.3000],
+        [6.9000, 3.1000, 5.1000, 2.3000],
+        [6.2000, 2.2000, 4.5000, 1.5000],
+        [5.8000, 2.7000, 3.9000, 1.2000],
+        [6.5000, 3.2000, 5.1000, 2.0000],
+        [4.8000, 3.0000, 1.4000, 0.1000],
+        [5.5000, 3.5000, 1.3000, 0.2000],
+        [4.9000, 3.1000, 1.5000, 0.1000],
+        [5.1000, 3.8000, 1.5000, 0.3000],
+        [6.3000, 3.3000, 4.7000, 1.6000],
+        [6.5000, 3.0000, 5.8000, 2.2000],
+        [5.6000, 2.5000, 3.9000, 1.1000],
+        [5.7000, 2.8000, 4.5000, 1.3000],
+        [6.4000, 2.8000, 5.6000, 2.2000],
+        [4.7000, 3.2000, 1.6000, 0.2000],
+        [6.1000, 3.0000, 4.9000, 1.8000],
+        [5.0000, 3.4000, 1.6000, 0.4000],
+        [6.4000, 2.8000, 5.6000, 2.1000],
+        [7.9000, 3.8000, 6.4000, 2.0000],
+        [6.7000, 3.0000, 5.2000, 2.3000],
+        [6.7000, 2.5000, 5.8000, 1.8000],
+        [6.8000, 3.2000, 5.9000, 2.3000],
+        [4.8000, 3.0000, 1.4000, 0.3000],
+        [4.8000, 3.1000, 1.6000, 0.2000]])
+2025-03-03 12:07:16,196 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 12:07:16,209 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 12:07:16,217 - INFO - inference data has been loaded
+2025-03-03 12:07:16,262 - INFO - Results saved to /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/results/03.03.2025_12.07.csv
+2025-03-03 12:07:16,292 - INFO - Prediction results: tensor([[6.1000, 2.8000, 4.7000, 1.2000],
+        [5.7000, 3.8000, 1.7000, 0.3000],
+        [7.7000, 2.6000, 6.9000, 2.3000],
+        [6.0000, 2.9000, 4.5000, 1.5000],
+        [6.8000, 2.8000, 4.8000, 1.4000],
+        [5.4000, 3.4000, 1.5000, 0.4000],
+        [5.6000, 2.9000, 3.6000, 1.3000],
+        [6.9000, 3.1000, 5.1000, 2.3000],
+        [6.2000, 2.2000, 4.5000, 1.5000],
+        [5.8000, 2.7000, 3.9000, 1.2000],
+        [6.5000, 3.2000, 5.1000, 2.0000],
+        [4.8000, 3.0000, 1.4000, 0.1000],
+        [5.5000, 3.5000, 1.3000, 0.2000],
+        [4.9000, 3.1000, 1.5000, 0.1000],
+        [5.1000, 3.8000, 1.5000, 0.3000],
+        [6.3000, 3.3000, 4.7000, 1.6000],
+        [6.5000, 3.0000, 5.8000, 2.2000],
+        [5.6000, 2.5000, 3.9000, 1.1000],
+        [5.7000, 2.8000, 4.5000, 1.3000],
+        [6.4000, 2.8000, 5.6000, 2.2000],
+        [4.7000, 3.2000, 1.6000, 0.2000],
+        [6.1000, 3.0000, 4.9000, 1.8000],
+        [5.0000, 3.4000, 1.6000, 0.4000],
+        [6.4000, 2.8000, 5.6000, 2.1000],
+        [7.9000, 3.8000, 6.4000, 2.0000],
+        [6.7000, 3.0000, 5.2000, 2.3000],
+        [6.7000, 2.5000, 5.8000, 1.8000],
+        [6.8000, 3.2000, 5.9000, 2.3000],
+        [4.8000, 3.0000, 1.4000, 0.3000],
+        [4.8000, 3.1000, 1.6000, 0.2000]])
+2025-03-03 12:07:36,878 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 12:07:36,884 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 12:07:36,894 - INFO - inference data has been loaded
+2025-03-03 12:07:36,909 - INFO - Results saved to /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/results/03.03.2025_12.07.csv
+2025-03-03 12:07:36,912 - INFO - Prediction results: tensor([[6.1000, 2.8000, 4.7000, 1.2000],
+        [5.7000, 3.8000, 1.7000, 0.3000],
+        [7.7000, 2.6000, 6.9000, 2.3000],
+        [6.0000, 2.9000, 4.5000, 1.5000],
+        [6.8000, 2.8000, 4.8000, 1.4000],
+        [5.4000, 3.4000, 1.5000, 0.4000],
+        [5.6000, 2.9000, 3.6000, 1.3000],
+        [6.9000, 3.1000, 5.1000, 2.3000],
+        [6.2000, 2.2000, 4.5000, 1.5000],
+        [5.8000, 2.7000, 3.9000, 1.2000],
+        [6.5000, 3.2000, 5.1000, 2.0000],
+        [4.8000, 3.0000, 1.4000, 0.1000],
+        [5.5000, 3.5000, 1.3000, 0.2000],
+        [4.9000, 3.1000, 1.5000, 0.1000],
+        [5.1000, 3.8000, 1.5000, 0.3000],
+        [6.3000, 3.3000, 4.7000, 1.6000],
+        [6.5000, 3.0000, 5.8000, 2.2000],
+        [5.6000, 2.5000, 3.9000, 1.1000],
+        [5.7000, 2.8000, 4.5000, 1.3000],
+        [6.4000, 2.8000, 5.6000, 2.2000],
+        [4.7000, 3.2000, 1.6000, 0.2000],
+        [6.1000, 3.0000, 4.9000, 1.8000],
+        [5.0000, 3.4000, 1.6000, 0.4000],
+        [6.4000, 2.8000, 5.6000, 2.1000],
+        [7.9000, 3.8000, 6.4000, 2.0000],
+        [6.7000, 3.0000, 5.2000, 2.3000],
+        [6.7000, 2.5000, 5.8000, 1.8000],
+        [6.8000, 3.2000, 5.9000, 2.3000],
+        [4.8000, 3.0000, 1.4000, 0.3000],
+        [4.8000, 3.1000, 1.6000, 0.2000]])
+2025-03-03 12:09:38,603 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 12:09:38,609 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 12:09:38,624 - INFO - inference data has been loaded
+2025-03-03 12:09:38,635 - INFO - Results saved to /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/results/03.03.2025_12.09.csv
+2025-03-03 12:09:38,636 - INFO - Prediction results: tensor([1, 0, 2, 1, 1, 0, 0, 2, 1, 0, 2, 0, 0, 0, 0, 1, 2, 0, 1, 2, 0, 2, 0, 2,
+        2, 2, 2, 2, 0, 0])
+2025-03-03 12:14:05,830 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 12:14:05,847 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 12:14:05,863 - INFO - inference data has been loaded
+2025-03-03 12:14:05,912 - INFO - Results saved to /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/results/03.03.2025_12.14.csv
+2025-03-03 12:14:05,925 - INFO - Prediction results:     actual  predicted
+0        1          1
+1        0          0
+2        2          2
+3        1          1
+4        1          1
+5        0          0
+6        1          0
+7        2          2
+8        1          1
+9        1          0
+10       2          2
+11       0          0
+12       0          0
+13       0          0
+14       0          0
+15       1          1
+16       2          2
+17       1          0
+18       1          1
+19       2          2
+20       0          0
+21       2          2
+22       0          0
+23       2          2
+24       2          2
+25       2          2
+26       2          2
+27       2          2
+28       0          0
+29       0          0
+2025-03-03 12:23:49,960 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 12:23:49,973 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 12:23:49,981 - INFO - inference data has been loaded
+2025-03-03 12:23:50,021 - INFO - Accuracy score: 0.9
+2025-03-03 12:27:31,450 - INFO - Latest model: 03.03.2025_05.29.pickle
+2025-03-03 12:27:31,473 - INFO - Path of the model: /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/models/03.03.2025_05.29.pickle
+2025-03-03 12:27:31,486 - INFO - inference data has been loaded
+2025-03-03 12:27:31,534 - INFO - Accuracy score: 0.9
+2025-03-03 12:27:31,540 - INFO - Results saved to /Users/konstantinkuts/Library/CloudStorage/GoogleDrive-karzuan@gmail.com/My Drive/Colab Notebooks/EPAM DS foundations course/DS_module8/MLE_basic_example/results/03.03.2025_12.27.csv
+2025-03-03 12:27:31,553 - INFO - Prediction results:     actual  predicted  result
+0        1          1    True
+1        0          0    True
+2        2          2    True
+3        1          1    True
+4        1          1    True
+5        0          0    True
+6        1          0   False
+7        2          2    True
+8        1          1    True
+9        1          0   False
+10       2          2    True
+11       0          0    True
+12       0          0    True
+13       0          0    True
+14       0          0    True
+15       1          1    True
+16       2          2    True
+17       1          0   False
+18       1          1    True
+19       2          2    True
+20       0          0    True
+21       2          2    True
+22       0          0    True
+23       2          2    True
+24       2          2    True
+25       2          2    True
+26       2          2    True
+27       2          2    True
+28       0          0    True
+29       0          0    True
