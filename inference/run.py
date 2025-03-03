@@ -2,7 +2,7 @@
 Script loads the latest trained model, data for inference and predicts results.
 Imports necessary packages and modules.
 """
-
+#  comment before pulling
 import argparse
 import json
 import logging
