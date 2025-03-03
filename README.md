@@ -1,13 +1,16 @@
-# ML_basic_example
-Welcome to the `ML_basic_example` project. It is an ideal template for starting a well-structured Machine Learning project. The goal of this project is to make the deployment of ML models straightforward, efficient, and maintainable. The project has been set up to handle each aspect of the ML pipeline from data processing, training models, and inferencing on new data. In order to use this project template, you'll first need to create a GitHub account if you don't have one already. It's a simple process that takes just a few minutes. Go to [GitHub's homepage](https://github.com), click 'Sign up', and follow the prompts to set up your new account. Get ready to step into the world of efficient Machine Learning project structuring!
+## Overview
+This project demonstrates an end-to-end data science workflow for classifying Iris flower species using a Dockerized deep learning pipeline. The solution combines data scraping, preprocessing, model training, and batch inference within isolated Docker containers for reproducibility and scalability.
+
 
 ## Prerequisites
 
-Before diving into the detailed steps of setting up and using this project, there are few important prerequisites or requirements that need to be addressed. These prerequisites ensure that your local development environment is ready and capable of efficiently running and supporting the project. 
-Remember, if you encounter problems installing Docker Desktop or MLFlow, you may skip these steps, modify your code and work directly on your local machine using Python and Git.
+- **Data Acquisition**: Scrapes Iris dataset from [Scikit-learn](https://scikit-learn.org/)
+- **Data Processing**: Splits data into training/inference sets (70/30) with stratified sampling
+- **Deep Learning Model**: PyTorch-based neural network classifier
+- **Containerized Workflow**:
+  - 🐳 **Training Container**: Isolated model training environment
+  - 🐳 **Inference Container**: prediction system
 
-### Forking and Cloning from GitHub
-To start using this project, you first need to create a copy on your own GitHub account by 'forking' it. On the main page of the `ML_basic_example` project, click on the 'Fork' button at the top right corner. This will create a copy of the project under your own account. You can then 'clone' it to your local machine for personal use. To do this, click the 'Code' button on your forked repository, copy the provided link, and use the `git clone` command in your terminal followed by the copied link. This will create a local copy of the repository on your machine, and you're ready to start!
 
 ### Setting Up Development Environment
 Next, you need to set up a suitable Integrated Development Environment (IDE). Visual Studio Code (VSCode) is a great tool for this. You can download it from the official website (https://code.visualstudio.com/Download). After installing VSCode, open it and navigate to the `File` menu and click `Add Folder to Workspace`. Navigate to the directory where you cloned the forked repository and add it. VSCode supports a wide range of programming languages with features like syntax highlighting, code completion, and debugging configurations. You can now edit the files, navigate through your project, and start contributing to `ML_basic_example`. For running scripts, open a new terminal in VSCode by selecting `Terminal -> New Terminal`. Now you can execute your Python scripts directly in the terminal.
@@ -122,5 +125,7 @@ python inference/run.py
 
 Replace `/path_to_your_local_model_directory`, `/path_to_your_input_folder`, and `/path_to_your_output_folder` with actual paths on your local machine or network where your models, input, and output are stored.
 
-## Wrap Up
-This project illustrates a simple, yet effective template to organize an ML project. Following good practices and principles, it ensures a smooth transition from model development to deployment.
+## Acknowledgments
+Scikit-learn development team
+Alexander Markorvin [https://github.com/MarkKorvin/MLE_basic_example]
+PyTorch maintainers
