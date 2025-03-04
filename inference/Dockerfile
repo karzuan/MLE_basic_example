@@ -17,13 +17,16 @@ COPY models/${model_name} /app/models/${model_name}.pickle
 # Copy the code itself
 COPY inference /app/inference
 
-# Copy usefull scripts and configs
-COPY utils.py /app/utils.py
-COPY ${CONF_PATH} /app/${CONF_PATH}
+# Copy useful scripts and configs
+COPY utils.py /app
+COPY ${CONF_PATH} /app
 
 # Install any necessary packages listed in requirements.txt
-COPY requirements.txt ./
+COPY requirements.txt /app
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Adjust PYTHONPATH
+ENV PYTHONPATH "${PYTHONPATH}:/app"
 
 # Train the model
 # RUN python3 inference/run.py
