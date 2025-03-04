@@ -109,6 +109,10 @@ After that ensure that you have your results in the `results` directory in your 
 ```bash
 python inference/run.py
 ```
+3. Copy results to your local machine:
+```bash
+docker cp <container_id>:/app/results/<file_name>.csv ./results
+```
 
 Replace `/path_to_your_local_model_directory`, `/path_to_your_input_folder`, and `/path_to_your_output_folder` with actual paths on your local machine or network where your models, input, and output are stored.
 

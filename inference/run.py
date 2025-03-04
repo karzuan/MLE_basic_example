@@ -2,7 +2,7 @@
 Script loads the latest trained model, data for inference and predicts results.
 Imports necessary packages and modules.
 """
-#  comment before pulling
+
 import argparse
 import json
 import logging
@@ -154,6 +154,7 @@ def predict_results(model, infer_data: pd.DataFrame) -> pd.DataFrame:
     # infer_data['actuals'] = y_infer
     results['result'] = results.apply(lambda x: True if x['actual'] == x['predicted'] else False, axis=1)
     return results
+
 
 def store_results(results: pd.DataFrame, path: str = None) -> None:
     """Store the prediction results in 'results' directory with current datetime as a filename"""
