@@ -25,7 +25,6 @@ from torch.utils.data import TensorDataset, DataLoader
 # mlflow.set_tracking_uri("../mlruns")
 # mlflow.autolog()
 
-
 # Adds the root directory to system path
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(ROOT_DIR))
