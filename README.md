@@ -2,6 +2,7 @@
 This project demonstrates an end-to-end data science workflow for classifying Iris flower species using a Dockerized deep learning pipeline. The solution combines data scraping, preprocessing, model training, and batch inference within isolated Docker containers for reproducibility and scalability.
 
 
+
 ## Prerequisites
 
 - **Data Acquisition**: Scrapes Iris dataset from [Scikit-learn](https://scikit-learn.org/)
