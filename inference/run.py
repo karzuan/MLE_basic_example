@@ -9,6 +9,7 @@ import logging
 import os
 import pickle # library for serializing and de-serializing Python objects
 import sys
+print(sys.path)
 from datetime import datetime
 from utils import get_project_dir, configure_logging
 from typing import List, Any
