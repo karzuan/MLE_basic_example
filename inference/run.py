@@ -2,26 +2,23 @@
 Script loads the latest trained model, data for inference and predicts results.
 Imports necessary packages and modules.
 """
-
+from datetime import datetime
+from utils import get_project_dir, configure_logging
+from typing import List, Any
 import argparse
 import json
 import logging
 import os
-import pickle # library for serializing and de-serializing Python objects
+import pickle  # library for serializing and de-serializing Python objects
 import sys
-print(sys.path)
-from datetime import datetime
-from utils import get_project_dir, configure_logging
-from typing import List, Any
 import torch
 from torch import nn
-import torch.nn.functional as F
 from torchmetrics import Accuracy
 from sklearn.metrics import accuracy_score
 import pytorch_lightning as pl
-from torch.utils.data import TensorDataset, DataLoader
 import pandas as pd
 
+print(sys.path)
 # Adds the root directory to system path
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(ROOT_DIR))
@@ -43,11 +40,12 @@ RESULTS_DIR = get_project_dir(conf['general']['results_dir'])
 
 # Initializes parser for command line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--infer_file", 
-                    help="Specify inference data file", 
+parser.add_argument("--infer_file",
+                    help="Specify inference data file",
                     default=conf['inference']['inp_table_name'])
-parser.add_argument("--out_path", 
+parser.add_argument("--out_path",
                     help="Specify the path to the output table")
+
 
 class IrisModel(pl.LightningModule):
     def __init__(self, input_dim=4, output_dim=3, learning_rate=0.01):
@@ -87,7 +85,7 @@ class IrisModel(pl.LightningModule):
         self.log('val_acc', acc, on_epoch=True, prog_bar=True)
         return {'loss': loss, 'accuracy': acc}
 
-    def test_step(self, batch, batch_idx): # Added test_step method
+    def test_step(self, batch, batch_idx):  # Added test_step method
         x_batch, y_batch = batch
         y_pred = self(x_batch)
         loss = self.loss_fn(y_pred, y_batch)
@@ -179,7 +177,7 @@ def main():
     results = predict_results(model, infer_data)
     store_results(results, args.out_path)
 
-    #logging.info(f'Prediction results: {results}')
+    # logging.info(f'Prediction results: {results}')
 
 
 if __name__ == "__main__":

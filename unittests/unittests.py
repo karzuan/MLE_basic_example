@@ -4,19 +4,18 @@ import os
 import sys
 import json
 import torch
-
-current_dir = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = os.path.dirname(current_dir)
-#print('root dir', ROOT_DIR)
-sys.path.append(os.path.dirname(ROOT_DIR))
-# CONF_FILE = os.getenv('CONF_PATH')
-CONF_FILE = ROOT_DIR + '/settings.json'
-#CONF_FILE = "../settings.json"
-
 from training.train import DataProcessor
 from training.train import Training
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(current_dir)
+# print('root dir', ROOT_DIR)
+sys.path.append(os.path.dirname(ROOT_DIR))
+# CONF_FILE = os.getenv('CONF_PATH')
+CONF_FILE = ROOT_DIR + '/settings.json'
+# CONF_FILE = "../settings.json"
 # print(f"Current working directory: {os.getcwd()}")
+
 
 class TestDataProcessor(unittest.TestCase):
     @classmethod
@@ -44,14 +43,14 @@ class TestTraining(unittest.TestCase):
     def test_train(self):
         tr = Training()
         # assume you have some prepared data
-        X_train = pd.DataFrame({
+        x_train = pd.DataFrame({
             'sepal length(cm)': [4.6, 5.7, 6.4, 4.8],
             'sepal width(cm)': [3.5, 4.4, 3.3, 2.2],
             'petal length(cm)': [1.0, 1.5, 4.4, 1.5],
             'petal width(cm)': [0.3, 0.4, 1.3, 0.2]
         })
         y_train = pd.Series([0, 0, 1, 0])
-        tr.train(X_train, y_train)
+        tr.train(x_train, y_train)
         self.assertIsInstance(tr.model, torch.nn.Module)
 
 

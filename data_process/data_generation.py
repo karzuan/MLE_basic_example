@@ -1,5 +1,4 @@
 # Importing required libraries
-import numpy as np
 import pandas as pd
 import logging
 import os
@@ -7,6 +6,7 @@ import sys
 import json
 from sklearn.model_selection import train_test_split
 from sklearn import datasets
+from utils import singleton, get_project_dir, configure_logging
 
 # Create logger
 logger = logging.getLogger()
@@ -15,7 +15,6 @@ logger.setLevel(logging.INFO)
 # Define directories
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(ROOT_DIR))
-from utils import singleton, get_project_dir, configure_logging
 
 DATA_DIR = os.path.abspath(os.path.join(ROOT_DIR, '../data'))
 if not os.path.exists(DATA_DIR):

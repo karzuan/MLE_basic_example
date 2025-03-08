@@ -12,6 +12,7 @@ results/
 mlruns/
 venv/
 training/lightning_logs
+unittests/lightning_logs
 
 # File Extensions
 *.csv

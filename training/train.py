@@ -1,29 +1,22 @@
 """
 This script prepares the data, runs the training, and saves the model.
 """
+from datetime import datetime
+from utils import get_project_dir, configure_logging
+from sklearn.model_selection import train_test_split
+import torch
+from torch import nn
+from torchmetrics import Accuracy
 import argparse
 import os
 import sys
 import pickle
 import json
 import logging
-from datetime import datetime
 import time
-from utils import get_project_dir, configure_logging
-from sklearn.model_selection import train_test_split
 import pandas as pd
-import numpy as np
-import torch
-from torch import nn
-import torch.nn.functional as F
-from torchmetrics import Accuracy
 import pytorch_lightning as pl
 from torch.utils.data import TensorDataset, DataLoader
-
-# Comment this lines if you have problems with MLFlow installation
-# import mlflow
-# mlflow.set_tracking_uri("../mlruns")
-# mlflow.autolog()
 
 # Adds the root directory to system path
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -67,7 +60,7 @@ class DataProcessor:
     def data_extraction(self, path: str) -> pd.DataFrame:
         logging.info(f"Loading data from {path}...")
         return pd.read_csv(path)
-        
+
     def data_rand_sampling(self, df: pd.DataFrame, max_rows: int) -> pd.DataFrame:
         if not max_rows or max_rows < 0:
             logging.info('Max_rows not defined. Skipping sampling.')
@@ -77,6 +70,7 @@ class DataProcessor:
             df = df.sample(n=max_rows, replace=False, random_state=conf['general']['random_state'])
             logging.info(f'Random sampling performed. Sample size: {max_rows}')
         return df
+
 
 class IrisModel(pl.LightningModule):
     def __init__(self, input_dim=4, output_dim=3, learning_rate=0.01):
@@ -113,7 +107,7 @@ class IrisModel(pl.LightningModule):
         self.log('val_acc', acc, on_epoch=True, prog_bar=True)
         return {'loss': loss, 'accuracy': acc}
 
-    def test_step(self, batch, batch_idx): # Added test_step method
+    def test_step(self, batch, batch_idx):  # Added test_step method
         x_batch, y_batch = batch
         y_pred = self(x_batch)
         loss = self.loss_fn(y_pred, y_batch)
@@ -142,9 +136,11 @@ class Training:
 
     def data_split(self, df: pd.DataFrame, test_size: float = 0.33) -> tuple:
         logging.info("Splitting data into training and test sets...")
-        return train_test_split(df[['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']],
-                         df['y'],
-                         test_size=test_size, random_state=conf['general']['random_state'])
+        return train_test_split(df[['sepal length (cm)',
+                                    'sepal width (cm)',
+                                    'petal length (cm)',
+                                    'petal width (cm)']],
+                                df['y'], test_size=test_size, random_state=conf['general']['random_state'])
 
     def train(self, x_train: pd.DataFrame, y_train: pd.DataFrame) -> None:
         logging.info("Training the model...")
@@ -155,7 +151,7 @@ class Training:
         trainer = pl.Trainer(max_epochs=10)
         trainer.fit(self.model, train_loader)
 
-    def test(self, x_test: pd.DataFrame, y_test: pd.DataFrame) -> float:
+    def test(self, x_test: pd.DataFrame, y_test: pd.DataFrame) -> list:
         logging.info("Testing the model...")
         x_test = torch.tensor(x_test.values, dtype=torch.float32)
         y_test = torch.tensor(y_test.values, dtype=torch.long)
@@ -184,7 +180,6 @@ class Training:
 
         with open(path, 'wb') as f:
             pickle.dump(self.model, f)
-
 
 
 def main():
